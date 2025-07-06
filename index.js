@@ -20,7 +20,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ajout des routes
-// app.use());
+app.use("/anime", require("./Router/anime.router"));
+
+// Middleware pour routes non trouvées
+app.use((req, res, next) => {
+  res.status(404).json({ status: "erreur", message: "Route non trouvée" });
+});
+
+// Middleware gestion erreurs globales
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res
+    .status(500)
+    .json({ status: "erreur", message: "Une erreur serveur est survenue" });
+});
 
 app.listen(port, () => {
   console.log(`Le server est démarré sur le port: ${port}`);
