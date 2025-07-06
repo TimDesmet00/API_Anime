@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const AnimeSchema = new mongoose.Schema({
   title: {
     type: String,
+    unique: true, // Assure que le titre est unique
     required: [true, "Un titre est requis"],
   }, // Titre principal
 
