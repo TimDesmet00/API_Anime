@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ajout des routes
 app.use("/anime", require("./Router/anime.router"));
+app.use("/studio", require("./Router/studio.router"));
 
 // Middleware pour routes non trouvées
 app.use((req, res, next) => {
