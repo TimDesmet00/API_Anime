@@ -57,6 +57,10 @@ const AnimeSchema = new mongoose.Schema({
     required: [true, "Un slug est requis pour l'URL et l'affichage"],
   },
 
+  poster: {
+    type: String, // URL vers l'image de couverture
+  },
+
   favoriteCharacters: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Character", // Référence aux personnages favoris (liens)
