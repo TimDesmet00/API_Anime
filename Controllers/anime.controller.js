@@ -1,4 +1,5 @@
 const Anime = require("../Models/anime.model");
+const uploadImage = require("../Utils/uploadImage");
 const Character = require("../Models/character.model");
 const studios = require("../Models/studio.model");
 
@@ -11,8 +12,17 @@ const createAnime = async (req, res) => {
   }
 
   try {
+    let posterUrl = null;
+    if (req.body.poster) {
+      // Upload de l'image sur Cloudinary
+      const uploadResult = await uploadImage(req.body.poster);
+      posterUrl = uploadResult.secure_url; // URL sécurisée retournée
+    }
     // Créer un nouvel anime
-    const anime = await Anime.create(req.body);
+    const anime = await Anime.create({
+      ...req.body,
+      poster: posterUrl || req.body.poster,
+    });
     res.status(201).json({
       status: "succès",
       data: {
@@ -81,6 +91,14 @@ const getAnimeById = async (req, res) => {
 
 const updateAnime = async (req, res) => {
   try {
+    let updatedData = { ...req.body };
+
+    if (req.body.poster) {
+      // Upload de la nouvelle image sur Cloudinary
+      const uploadResult = await uploadImage(req.body.poster);
+      updatedData.poster = uploadResult.secure_url;
+    }
+
     const anime = await Anime.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
