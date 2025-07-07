@@ -99,7 +99,7 @@ const updateAnime = async (req, res) => {
       updatedData.poster = uploadResult.secure_url;
     }
 
-    const anime = await Anime.findByIdAndUpdate(req.params.id, req.body, {
+    const anime = await Anime.findByIdAndUpdate(req.params.id, updatedData, {
       new: true,
       runValidators: true,
     })
