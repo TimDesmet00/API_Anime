@@ -79,8 +79,8 @@ const AnimeSchema = new mongoose.Schema({
 });
 
 // 💡 Middleware pour mettre à jour automatiquement le champ `updatedAt`
-AnimeSchema.pre("save", function (next) {
-  this.updatedAt = Date.now();
+AnimeSchema.pre("findOneAndUpdate", function (next) {
+  this.set({ updatedAt: Date.now() });
   next();
 });
 

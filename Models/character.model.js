@@ -46,8 +46,8 @@ const CharacterSchema = new mongoose.Schema({
 });
 
 // Middleware pour mettre à jour updatedAt à chaque save
-CharacterSchema.pre("save", function (next) {
-  this.updatedAt = Date.now();
+CharacterSchema.pre("findOneAndUpdate", function (next) {
+  this.set({ updatedAt: Date.now() });
   next();
 });
 

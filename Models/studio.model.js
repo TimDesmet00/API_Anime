@@ -42,8 +42,8 @@ const StudioSchema = new mongoose.Schema({
 });
 
 // Middleware pour mettre à jour updatedAt à chaque save
-StudioSchema.pre("save", function (next) {
-  this.updatedAt = Date.now();
+StudioSchema.pre("findOneAndUpdate", function (next) {
+  this.set({ updatedAt: Date.now() });
   next();
 });
 
