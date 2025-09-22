@@ -30,8 +30,15 @@ const AnimeSchema = new mongoose.Schema({
     type: Date,
   }, // Date de sortie (format ISO)
 
+  season: {
+    type: Number,
+    min: 1,
+    required: [true, "Le numéro de saison est requis"],
+  },
+
   episodes: {
     type: Number,
+    min: 1,
     required: [true, "Le nombre d'épisodes est requis"],
   }, // Nombre total d'épisodes
 
