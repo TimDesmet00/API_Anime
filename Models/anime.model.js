@@ -14,7 +14,7 @@ const AnimeSchema = new mongoose.Schema({
 
   description: {
     type: String,
-    required: [true, "Une description est requise"],
+    required: [true, "Une Résumé est requise"],
   }, // Résumé de l'anime,
 
   genres: {
