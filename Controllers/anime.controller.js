@@ -150,12 +150,36 @@ const deleteAnime = async (req, res) => {
   }
 };
 
+const getAnimesByStudio = async (req, res) => {
+  try {
+    const studioId = req.params.studioId;
+    const animes = await Anime.find({ studios: studioId })
+      .populate("studios")
+      .populate("favoriteCharacters");
+    res.status(200).json({
+      status: "succès",
+      results: animes.length,
+      data: {
+        animes,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "erreur",
+      message:
+        error.message ||
+        "Une erreur s'est produite lors de la récupération des animes.",
+    });
+  }
+};
+
 module.exports = {
   createAnime,
   getAllAnimes,
   getAnimeById,
   updateAnime,
   deleteAnime,
+  getAnimesByStudio,
   // Add more functions as needed
   // e.g., searchAnimes, getAnimesByStudio, etc.
 };
