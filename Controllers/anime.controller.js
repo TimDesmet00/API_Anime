@@ -188,7 +188,66 @@ const getAnimesByGenre = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).send({
+    res.status(400).send({
+      message: "Une erreur est survenue lors de la récupération des animes.",
+      error: error.message,
+    });
+  }
+};
+
+const searchAnimes = async (req, res) => {
+  // Recherche d'animes par titre (partiel, insensible à la casse)
+  try {
+    const animes = await Anime.find({
+      title: { $regex: req.params.title, $options: "i" },
+    });
+    res.status(200).json({
+      status: "succès",
+      results: animes.length,
+      data: {
+        animes,
+      },
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: "Une erreur est survenue lors de la recherche des animes.",
+      error: error.message,
+    });
+  }
+};
+
+const getAnimesByStatus = async (req, res) => {
+  // Récupère tous les animes qui ont ce statut
+  try {
+    const animes = await Anime.find({ status: req.params.status });
+    res.status(200).json({
+      status: "succès",
+      results: animes.length,
+      data: {
+        animes,
+      },
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: "Une erreur est survenue lors de la récupération des animes.",
+      error: error.message,
+    });
+  }
+};
+
+const getAnimesByStatus = async (req, res) => {
+  // Récupère tous les animes qui ont ce statut
+  try {
+    const animes = await Anime.find({ status: req.params.status });
+    res.status(200).json({
+      status: "succès",
+      results: animes.length,
+      data: {
+        animes,
+      },
+    });
+  } catch (error) {
+    res.status(400).send({
       message: "Une erreur est survenue lors de la récupération des animes.",
       error: error.message,
     });
@@ -203,6 +262,9 @@ module.exports = {
   updateAnime,
   deleteAnime,
   getAnimesByStudio,
+  searchAnimes,
+  getAnimesByStatus,
+
   // Add more functions as needed
   // e.g., searchAnimes, getAnimesByStudio, etc.
 };
