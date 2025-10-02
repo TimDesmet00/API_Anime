@@ -2,6 +2,7 @@ const Anime = require("../Models/anime.model");
 const uploadImage = require("../Utils/uploadImage");
 const Character = require("../Models/character.model");
 const studios = require("../Models/studio.model");
+const Genre = require("../Models/genre.model");
 
 const createAnime = async (req, res) => {
   // Vérifier que la requête n'est pas vide
@@ -173,10 +174,30 @@ const getAnimesByStudio = async (req, res) => {
   }
 };
 
+const getAnimesByGenre = async (req, res) => {
+  // Récupère tous les animes qui ont ce genre
+  try {
+    const animes = await Anime.find({ genre: req.params.id });
+    res.status(200).json({
+      status: "succès",
+      results: animes.length,
+      data: {
+        animes,
+      },
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Une erreur est survenue lors de la récupération des animes.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createAnime,
   getAllAnimes,
   getAnimeById,
+  getAnimesByGenre,
   updateAnime,
   deleteAnime,
   getAnimesByStudio,
