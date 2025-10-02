@@ -177,7 +177,9 @@ const getAnimesByStudio = async (req, res) => {
 const getAnimesByGenre = async (req, res) => {
   // Récupère tous les animes qui ont ce genre
   try {
-    const animes = await Anime.find({ genre: req.params.id });
+    const animes = await Anime.find({ genre: req.params.id })
+      .populate("studios")
+      .populate("favoriteCharacters");
     res.status(200).json({
       status: "succès",
       results: animes.length,
